@@ -3,90 +3,367 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Complaint Portal - Admin</title>
+  <title>ResolveHub - Admin Console</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .admin-nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+    .admin-nav-btn {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      padding: 9px 18px;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: none;
+      transition: all 0.2s ease;
+    }
+    .admin-nav-btn:hover {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      transform: none;
+      box-shadow: none;
+    }
+    .admin-nav-btn.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #c7d2fe;
+      box-shadow: none;
+    }
+    .status-select-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Admin Dashboard - <span id="adminName"></span></h1>
-    <button class="link" onclick="logout()">Logout</button>
+  <!-- Admin Navigation Header -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>
+          Complaint Portal
+          <span style="font-size:0.7rem; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:9999px; font-weight:700;">ADMIN</span>
+        </h1>
+        <p>Administration & Redressal Desk</p>
+      </div>
+    </div>
+
+    <div class="header-user">
+      <div class="user-profile-badge">
+        <div class="user-avatar" id="adminAvatar" style="background: linear-gradient(135deg, #334155 0%, #0f172a 100%);">A</div>
+        <div class="user-meta">
+          <span class="user-name" id="adminName">Administrator</span>
+          <span class="role-pill" style="color:#b91c1c;">Super Admin</span>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()" title="Sign out">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        <span>Logout</span>
+      </button>
+    </div>
   </header>
 
-  <main>
-    <div class="card">
-      <h2>Summary</h2>
-      <div class="stats">
-        <div class="stat"><div class="num" id="statUsers">0</div>Total users</div>
-        <div class="stat"><div class="num" id="statComplaints">0</div>Total complaints</div>
-        <div class="stat"><div class="num" id="statPending">0</div>Pending complaints</div>
+  <main class="container">
+    <!-- Key Statistics Summary -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Registered Students</span>
+          <span class="stat-number" id="statUsers">0</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon indigo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Total Complaints</span>
+          <span class="stat-number" id="statComplaints">0</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon amber">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Pending Review</span>
+          <span class="stat-number" id="statPending">0</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon green">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Resolved Issues</span>
+          <span class="stat-number" id="statResolved">0</span>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>All complaints</h2>
-      <div id="actionMsg" class="msg"></div>
-      <div class="scroll">
+    <!-- Section Navigation Tabs -->
+    <div class="admin-nav-tabs">
+      <button class="admin-nav-btn active" id="tabBtnComplaints" onclick="switchAdminTab('complaints')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        Complaints Management
+      </button>
+      <button class="admin-nav-btn" id="tabBtnUsers" onclick="switchAdminTab('users')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        User Directory
+      </button>
+      <button class="admin-nav-btn" id="tabBtnLogs" onclick="switchAdminTab('logs')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Audit & Activity Log
+      </button>
+    </div>
+
+    <!-- TAB 1: ALL COMPLAINTS -->
+    <div id="sectionComplaints" class="card">
+      <div class="card-header">
+        <div>
+          <h2>All Grievances & Complaints</h2>
+          <p>Review and update resolution status in real-time</p>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <div class="search-input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input type="text" id="adminComplaintSearch" placeholder="Search by student, title, or ID..." oninput="filterAdminComplaints()">
+        </div>
+
+        <div class="filter-pills">
+          <button type="button" class="filter-pill active" onclick="setAdminFilter('ALL', this)">All</button>
+          <button type="button" class="filter-pill" onclick="setAdminFilter('PENDING', this)">Pending</button>
+          <button type="button" class="filter-pill" onclick="setAdminFilter('IN PROGRESS', this)">In Progress</button>
+          <button type="button" class="filter-pill" onclick="setAdminFilter('RESOLVED', this)">Resolved</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
         <table>
-          <thead><tr><th>ID</th><th>User</th><th>Title</th><th>Description</th><th>Date</th><th>Status</th></tr></thead>
-          <tbody id="complaintRows"></tbody>
+          <thead>
+            <tr>
+              <th style="width: 70px;">ID</th>
+              <th style="width: 160px;">Student Name</th>
+              <th style="width: 220px;">Title</th>
+              <th>Description</th>
+              <th style="width: 150px;">Filed Date</th>
+              <th style="width: 160px;">Action / Status</th>
+            </tr>
+          </thead>
+          <tbody id="complaintRows">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="adminEmptyComplaints" class="empty-state" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <h3>No complaints match your search</h3>
+        <p>Try modifying your search term or filter selection.</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: REGISTERED USERS -->
+    <div id="sectionUsers" class="card" style="display:none;">
+      <div class="card-header">
+        <div>
+          <h2>Registered Users Directory</h2>
+          <p>Complete registry of enrolled students and administrative accounts</p>
+        </div>
+      </div>
+
+      <div class="controls-bar">
+        <div class="search-input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input type="text" id="adminUserSearch" placeholder="Search user by name or email..." oninput="filterAdminUsers()">
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 70px;">User ID</th>
+              <th>Full Name</th>
+              <th>Email Address</th>
+              <th style="width: 120px;">Role</th>
+              <th style="width: 140px;">Complaints Filed</th>
+            </tr>
+          </thead>
+          <tbody id="userRows">
+            <!-- Dynamic rows -->
+          </tbody>
         </table>
       </div>
     </div>
 
-    <div class="card">
-      <h2>All users</h2>
-      <div class="scroll">
+    <!-- TAB 3: AUDIT & ACTIVITY LOG -->
+    <div id="sectionLogs" class="card" style="display:none;">
+      <div class="card-header">
+        <div>
+          <h2>Audit & Activity Log</h2>
+          <p>Latest 100 chronological operations logged by the system</p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
         <table>
-          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Complaints</th></tr></thead>
-          <tbody id="userRows"></tbody>
+          <thead>
+            <tr>
+              <th style="width: 80px;">Log ID</th>
+              <th style="width: 180px;">User / Actor</th>
+              <th>Action Taken</th>
+              <th style="width: 180px;">Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="logRows">
+            <!-- Dynamic rows -->
+          </tbody>
         </table>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Activity log (latest 100)</h2>
-      <div class="scroll">
-        <table>
-          <thead><tr><th>ID</th><th>User</th><th>Action</th><th>Time</th></tr></thead>
-          <tbody id="logRows"></tbody>
-        </table>
-      </div>
-    </div>
   </main>
 
   <script src="js/app.js"></script>
   <script>
-    // Page protection (the server ALSO checks the role on every request)
+    let adminData = { summary: {}, users: [], complaints: [], logs: [] };
+    let currentAdminFilter = "ALL";
+
     async function init() {
       const me = await apiGet("api/me");
       if (me.status !== 200) { window.location.href = "login.html"; return; }
       if (me.data.role !== "ADMIN") { window.location.href = "user.html"; return; }
-      document.getElementById("adminName").textContent = me.data.name;
+      
+      const adminName = me.data.name || "Administrator";
+      document.getElementById("adminName").textContent = adminName;
+      document.getElementById("adminAvatar").textContent = getInitials(adminName);
+
       loadDashboard();
+    }
+
+    function switchAdminTab(tab) {
+      document.getElementById("sectionComplaints").style.display = tab === "complaints" ? "block" : "none";
+      document.getElementById("sectionUsers").style.display = tab === "users" ? "block" : "none";
+      document.getElementById("sectionLogs").style.display = tab === "logs" ? "block" : "none";
+
+      document.getElementById("tabBtnComplaints").className = tab === "complaints" ? "admin-nav-btn active" : "admin-nav-btn";
+      document.getElementById("tabBtnUsers").className = tab === "users" ? "admin-nav-btn active" : "admin-nav-btn";
+      document.getElementById("tabBtnLogs").className = tab === "logs" ? "admin-nav-btn active" : "admin-nav-btn";
     }
 
     async function loadDashboard() {
       const result = await apiGet("api/admin");
       if (result.status !== 200) { window.location.href = "login.html"; return; }
-      const d = result.data;
+      adminData = result.data;
 
       // Summary numbers
-      document.getElementById("statUsers").textContent = d.summary.totalUsers;
-      document.getElementById("statComplaints").textContent = d.summary.totalComplaints;
-      document.getElementById("statPending").textContent = d.summary.pendingComplaints;
+      const totalComplaints = adminData.summary.totalComplaints || 0;
+      const pendingComplaints = adminData.summary.pendingComplaints || 0;
+      const totalUsers = adminData.summary.totalUsers || 0;
+      
+      // Calculate resolved
+      const resolved = (adminData.complaints || []).filter(c => c.status === "RESOLVED").length;
 
-      // Complaints table with a status dropdown
+      document.getElementById("statUsers").textContent = totalUsers;
+      document.getElementById("statComplaints").textContent = totalComplaints;
+      document.getElementById("statPending").textContent = pendingComplaints;
+      document.getElementById("statResolved").textContent = resolved;
+
+      renderAdminComplaints();
+      renderAdminUsers();
+      renderAdminLogs();
+    }
+
+    function setAdminFilter(filter, el) {
+      currentAdminFilter = filter;
+      document.querySelectorAll(".filter-pills .filter-pill").forEach(btn => btn.classList.remove("active"));
+      if (el) el.classList.add("active");
+      renderAdminComplaints();
+    }
+
+    function filterAdminComplaints() {
+      renderAdminComplaints();
+    }
+
+    function renderAdminComplaints() {
+      const search = (document.getElementById("adminComplaintSearch").value || "").toLowerCase().trim();
       const cBody = document.getElementById("complaintRows");
+      const empty = document.getElementById("adminEmptyComplaints");
       cBody.innerHTML = "";
-      d.complaints.forEach(c => {
-        const tr = document.createElement("tr");
-        tr.appendChild(cell(c.id));
-        tr.appendChild(cell(c.userName));
-        tr.appendChild(cell(c.title));
-        tr.appendChild(cell(c.description));
-        tr.appendChild(cell(c.createdAt));
 
+      let list = adminData.complaints || [];
+
+      if (currentAdminFilter !== "ALL") {
+        list = list.filter(c => (c.status || "").toUpperCase() === currentAdminFilter);
+      }
+
+      if (search) {
+        list = list.filter(c => 
+          (c.userName && c.userName.toLowerCase().includes(search)) ||
+          (c.title && c.title.toLowerCase().includes(search)) ||
+          (c.description && c.description.toLowerCase().includes(search)) ||
+          String(c.id).includes(search)
+        );
+      }
+
+      if (list.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+      empty.style.display = "none";
+
+      list.forEach(c => {
+        const tr = document.createElement("tr");
+
+        // ID
+        tr.appendChild(cell("#" + c.id, "id-cell"));
+
+        // User
+        tr.appendChild(cell(c.userName || "Unknown", "title-cell"));
+
+        // Title
+        tr.appendChild(cell(c.title, "title-cell"));
+
+        // Description
+        tr.appendChild(cell(c.description, "desc-cell"));
+
+        // Date
+        tr.appendChild(cell(formatDate(c.createdAt), "date-cell"));
+
+        // Status Changer Dropdown
         const select = document.createElement("select");
+        select.className = "status-select";
         ["PENDING", "IN PROGRESS", "RESOLVED"].forEach(s => {
           const opt = document.createElement("option");
           opt.value = s;
@@ -94,43 +371,112 @@
           if (s === c.status) opt.selected = true;
           select.appendChild(opt);
         });
-        select.onchange = () => changeStatus(c.id, select.value);
+
+        // Apply color based on initial status
+        updateSelectStyle(select, c.status);
+
+        select.onchange = () => {
+          updateSelectStyle(select, select.value);
+          changeStatus(c.id, select.value);
+        };
+
         const td = document.createElement("td");
         td.appendChild(select);
         tr.appendChild(td);
+
         cBody.appendChild(tr);
       });
+    }
 
-      // Users table
+    function updateSelectStyle(select, status) {
+      if (status === "RESOLVED") {
+        select.style.backgroundColor = "var(--status-resolved-bg)";
+        select.style.color = "var(--status-resolved-text)";
+        select.style.borderColor = "var(--status-resolved-border)";
+      } else if (status === "IN PROGRESS") {
+        select.style.backgroundColor = "var(--status-progress-bg)";
+        select.style.color = "var(--status-progress-text)";
+        select.style.borderColor = "var(--status-progress-border)";
+      } else {
+        select.style.backgroundColor = "var(--status-pending-bg)";
+        select.style.color = "var(--status-pending-text)";
+        select.style.borderColor = "var(--status-pending-border)";
+      }
+    }
+
+    function filterAdminUsers() {
+      renderAdminUsers();
+    }
+
+    function renderAdminUsers() {
+      const search = (document.getElementById("adminUserSearch").value || "").toLowerCase().trim();
       const uBody = document.getElementById("userRows");
       uBody.innerHTML = "";
-      d.users.forEach(u => {
+
+      let users = adminData.users || [];
+      if (search) {
+        users = users.filter(u => 
+          (u.name && u.name.toLowerCase().includes(search)) ||
+          (u.email && u.email.toLowerCase().includes(search)) ||
+          String(u.id).includes(search)
+        );
+      }
+
+      users.forEach(u => {
         const tr = document.createElement("tr");
-        tr.appendChild(cell(u.id));
-        tr.appendChild(cell(u.name));
-        tr.appendChild(cell(u.email));
-        tr.appendChild(cell(u.role));
-        tr.appendChild(cell(u.complaintCount));
+        tr.appendChild(cell("#" + u.id, "id-cell"));
+        tr.appendChild(cell(u.name, "title-cell"));
+        tr.appendChild(cell(u.email, "desc-cell"));
+        
+        const roleTd = document.createElement("td");
+        const roleSpan = document.createElement("span");
+        roleSpan.className = "role-pill";
+        roleSpan.style.backgroundColor = u.role === "ADMIN" ? "#fee2e2" : "#eef2ff";
+        roleSpan.style.color = u.role === "ADMIN" ? "#991b1b" : "#4338ca";
+        roleSpan.style.padding = "3px 8px";
+        roleSpan.style.borderRadius = "9999px";
+        roleSpan.textContent = u.role;
+        roleTd.appendChild(roleSpan);
+        tr.appendChild(roleTd);
+
+        tr.appendChild(cell(u.complaintCount + " filed", "title-cell"));
         uBody.appendChild(tr);
       });
+    }
 
-      // Activity log table
+    function renderAdminLogs() {
       const lBody = document.getElementById("logRows");
       lBody.innerHTML = "";
-      d.logs.forEach(l => {
+
+      (adminData.logs || []).forEach(l => {
         const tr = document.createElement("tr");
-        tr.appendChild(cell(l.id));
-        tr.appendChild(cell(l.userName));
-        tr.appendChild(cell(l.action));
-        tr.appendChild(cell(l.createdAt));
+        tr.appendChild(cell("#" + l.id, "id-cell"));
+        tr.appendChild(cell(l.userName || "System", "title-cell"));
+        
+        const actionTd = document.createElement("td");
+        actionTd.textContent = l.action;
+        actionTd.style.fontFamily = "var(--font-mono)";
+        actionTd.style.fontSize = "0.82rem";
+        if (l.action.includes("RESOLVED")) {
+          actionTd.style.color = "var(--status-resolved-text)";
+          actionTd.style.fontWeight = "600";
+        }
+        tr.appendChild(actionTd);
+
+        tr.appendChild(cell(formatDate(l.createdAt), "date-cell"));
         lBody.appendChild(tr);
       });
     }
 
     async function changeStatus(complaintId, status) {
-      const result = await apiPost("api/admin", { complaintId: complaintId, status: status });
-      showMessage("actionMsg", result.data.message || "Done.", result.data.success ? "ok" : "error");
-      loadDashboard();   // refresh numbers and the activity log
+      const result = await apiPost("api/admin", { complaintId, status });
+      if (result.data && result.data.success) {
+        showToast(`Complaint #${complaintId} changed to ${status}`, "ok");
+        loadDashboard(); // Refresh stats and activity logs
+      } else {
+        showToast((result.data && result.data.message) || "Failed to update status", "error");
+        loadDashboard();
+      }
     }
 
     init();
