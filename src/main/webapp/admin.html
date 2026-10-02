@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complaint Portal - Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Admin Dashboard - <span id="adminName"></span></h1>
+    <button class="link" onclick="logout()">Logout</button>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Summary</h2>
+      <div class="stats">
+        <div class="stat"><div class="num" id="statUsers">0</div>Total users</div>
+        <div class="stat"><div class="num" id="statComplaints">0</div>Total complaints</div>
+        <div class="stat"><div class="num" id="statPending">0</div>Pending complaints</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>All complaints</h2>
+      <div id="actionMsg" class="msg"></div>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>ID</th><th>User</th><th>Title</th><th>Description</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody id="complaintRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>All users</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Complaints</th></tr></thead>
+          <tbody id="userRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Activity log (latest 100)</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>ID</th><th>User</th><th>Action</th><th>Time</th></tr></thead>
+          <tbody id="logRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Page protection (the server ALSO checks the role on every request)
+    async function init() {
+      const me = await apiGet("api/me");
+      if (me.status !== 200) { window.location.href = "login.html"; return; }
+      if (me.data.role !== "ADMIN") { window.location.href = "user.html"; return; }
+      document.getElementById("adminName").textContent = me.data.name;
+      loadDashboard();
+    }
+
+    async function loadDashboard() {
+      const result = await apiGet("api/admin");
+      if (result.status !== 200) { window.location.href = "login.html"; return; }
+      const d = result.data;
+
+      // Summary numbers
+      document.getElementById("statUsers").textContent = d.summary.totalUsers;
+      document.getElementById("statComplaints").textContent = d.summary.totalComplaints;
+      document.getElementById("statPending").textContent = d.summary.pendingComplaints;
+
+      // Complaints table with a status dropdown
+      const cBody = document.getElementById("complaintRows");
+      cBody.innerHTML = "";
+      d.complaints.forEach(c => {
+        const tr = document.createElement("tr");
+        tr.appendChild(cell(c.id));
+        tr.appendChild(cell(c.userName));
+        tr.appendChild(cell(c.title));
+        tr.appendChild(cell(c.description));
+        tr.appendChild(cell(c.createdAt));
+
+        const select = document.createElement("select");
+        ["PENDING", "IN PROGRESS", "RESOLVED"].forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s;
+          opt.textContent = s;
+          if (s === c.status) opt.selected = true;
+          select.appendChild(opt);
+        });
+        select.onchange = () => changeStatus(c.id, select.value);
+        const td = document.createElement("td");
+        td.appendChild(select);
+        tr.appendChild(td);
+        cBody.appendChild(tr);
+      });
+
+      // Users table
+      const uBody = document.getElementById("userRows");
+      uBody.innerHTML = "";
+      d.users.forEach(u => {
+        const tr = document.createElement("tr");
+        tr.appendChild(cell(u.id));
+        tr.appendChild(cell(u.name));
+        tr.appendChild(cell(u.email));
+        tr.appendChild(cell(u.role));
+        tr.appendChild(cell(u.complaintCount));
+        uBody.appendChild(tr);
+      });
+
+      // Activity log table
+      const lBody = document.getElementById("logRows");
+      lBody.innerHTML = "";
+      d.logs.forEach(l => {
+        const tr = document.createElement("tr");
+        tr.appendChild(cell(l.id));
+        tr.appendChild(cell(l.userName));
+        tr.appendChild(cell(l.action));
+        tr.appendChild(cell(l.createdAt));
+        lBody.appendChild(tr);
+      });
+    }
+
+    async function changeStatus(complaintId, status) {
+      const result = await apiPost("api/admin", { complaintId: complaintId, status: status });
+      showMessage("actionMsg", result.data.message || "Done.", result.data.success ? "ok" : "error");
+      loadDashboard();   // refresh numbers and the activity log
+    }
+
+    init();
+  </script>
+</body>
+</html>

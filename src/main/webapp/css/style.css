@@ -1,0 +1,31 @@
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: #f2f4f8; margin: 0; color: #222; }
+header { background: #1f3a5f; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+header h1 { font-size: 20px; margin: 0; }
+main { max-width: 1000px; margin: 24px auto; padding: 0 16px; }
+.card { background: #fff; border-radius: 6px; padding: 20px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.card h2 { margin-top: 0; font-size: 18px; }
+label { display: block; margin: 10px 0 4px; font-size: 14px; }
+input, textarea, select { width: 100%; padding: 8px; border: 1px solid #bbb; border-radius: 4px; font-size: 14px; }
+textarea { height: 90px; resize: vertical; }
+button { background: #1f3a5f; color: #fff; border: 0; padding: 9px 18px; border-radius: 4px; cursor: pointer; font-size: 14px; margin-top: 12px; }
+button:hover { background: #2c5282; }
+button.link { background: transparent; border: 1px solid #fff; margin: 0; padding: 6px 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border-bottom: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+th { background: #eef1f6; }
+.msg { margin-top: 10px; font-size: 14px; }
+.msg.error { color: #b00020; }
+.msg.ok { color: #1b7f3b; }
+.tabs { display: flex; gap: 8px; margin-bottom: 10px; }
+.tabs button { margin: 0; background: #ccd3de; color: #222; }
+.tabs button.active { background: #1f3a5f; color: #fff; }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stat { flex: 1; min-width: 160px; background: #eef1f6; border-radius: 6px; padding: 14px; text-align: center; }
+.stat .num { font-size: 28px; font-weight: bold; color: #1f3a5f; }
+.badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; color: #fff; white-space: nowrap; }
+.badge.PENDING { background: #d98200; }
+.badge.IN-PROGRESS { background: #2b6cb0; }
+.badge.RESOLVED { background: #1b7f3b; }
+.scroll { max-height: 320px; overflow-y: auto; }
+.login-box { max-width: 420px; margin: 60px auto; }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complaint Portal - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header><h1>Complaint Management Portal</h1></header>
+
+  <div class="login-box">
+    <div class="card">
+      <div class="tabs">
+        <button id="tabLogin" class="active" onclick="showTab('login')">Login</button>
+        <button id="tabRegister" onclick="showTab('register')">Register</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword">
+        <button onclick="doLogin()">Login</button>
+        <div id="loginMsg" class="msg"></div>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" style="display:none">
+        <label for="regName">Name</label>
+        <input type="text" id="regName">
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail">
+        <label for="regPassword">Password (min 6 characters)</label>
+        <input type="password" id="regPassword">
+        <button onclick="doRegister()">Create account</button>
+        <div id="registerMsg" class="msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    function showTab(tab) {
+      const isLogin = tab === "login";
+      document.getElementById("loginForm").style.display = isLogin ? "block" : "none";
+      document.getElementById("registerForm").style.display = isLogin ? "none" : "block";
+      document.getElementById("tabLogin").className = isLogin ? "active" : "";
+      document.getElementById("tabRegister").className = isLogin ? "" : "active";
+    }
+
+    async function doLogin() {
+      const result = await apiPost("api/login", {
+        email: document.getElementById("loginEmail").value,
+        password: document.getElementById("loginPassword").value
+      });
+      if (result.data.success) {
+        // Send admin and normal users to their own page
+        window.location.href = result.data.role === "ADMIN" ? "admin.html" : "user.html";
+      } else {
+        showMessage("loginMsg", result.data.message || "Login failed.", "error");
+      }
+    }
+
+    async function doRegister() {
+      const result = await apiPost("api/register", {
+        name: document.getElementById("regName").value,
+        email: document.getElementById("regEmail").value,
+        password: document.getElementById("regPassword").value
+      });
+      if (result.data.success) {
+        showMessage("registerMsg", result.data.message, "ok");
+        document.getElementById("regName").value = "";
+        document.getElementById("regEmail").value = "";
+        document.getElementById("regPassword").value = "";
+      } else {
+        showMessage("registerMsg", result.data.message || "Registration failed.", "error");
+      }
+    }
+  </script>
+</body>
+</html>
