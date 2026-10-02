@@ -167,12 +167,10 @@
       btn.querySelector("span").textContent = "Create Student Account";
 
       if (result.data && result.data.success) {
-        showToast("Account created successfully! You can now log in.", "ok", 3000);
-        showMessage("registerMsg", result.data.message || "Registration successful! Please sign in.", "ok");
-        document.getElementById("regName").value = "";
-        document.getElementById("regEmail").value = "";
-        document.getElementById("regPassword").value = "";
-        setTimeout(() => showTab("login"), 1200);
+        showToast("Account created! Logging you in...", "ok", 1500);
+        setTimeout(() => {
+          window.location.href = "user.html";
+        }, 350);
       } else {
         const errorMsg = (result.data && result.data.message) || "Registration failed.";
         showMessage("registerMsg", errorMsg, "error");

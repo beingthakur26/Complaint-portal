@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,8 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
-/** POST /api/register  ->  creates a new USER account. */
+/** POST /api/register  ->  creates a new USER account and logs them in. */
 @WebServlet("/api/register")
 public class RegisterServlet extends HttpServlet {
 
@@ -77,7 +79,21 @@ public class RegisterServlet extends HttpServlet {
             }
 
             ActivityLogger.log(con, newId, "REGISTERED");
-            JsonUtil.send(res, 200, JsonUtil.message(true, "Registration successful. Please log in."));
+
+            // Automatically start session for immediate login
+            HttpSession old = req.getSession(false);
+            if (old != null) old.invalidate();
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", newId);
+            session.setAttribute("name", name);
+            session.setAttribute("role", "USER");
+
+            JsonUtil.send(res, 200, Map.of(
+                "success", true,
+                "message", "Account created successfully.",
+                "role", "USER",
+                "name", name
+            ));
 
         } catch (SQLException e) {
             e.printStackTrace();

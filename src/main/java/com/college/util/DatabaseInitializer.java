@@ -55,7 +55,7 @@ public class DatabaseInitializer implements ServletContextListener {
                 + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
                 + "FOREIGN KEY (user_id) REFERENCES users(id))");
 
-            createAdminIfMissing(con);
+            ensureAdminUser(con);
             System.out.println("[DatabaseInitializer] Database ready (" +
                 con.getMetaData().getDatabaseProductName() + ").");
 
@@ -65,23 +65,35 @@ public class DatabaseInitializer implements ServletContextListener {
         }
     }
 
-    private void createAdminIfMissing(Connection con) throws SQLException {
+    private void ensureAdminUser(Connection con) throws SQLException {
+        String adminPassword = System.getenv("ADMIN_PASSWORD");
+        if (adminPassword == null || adminPassword.isBlank()) adminPassword = "admin123";
+        String passwordHash = PasswordUtil.hash(adminPassword.trim());
+
         try (PreparedStatement check = con.prepareStatement("SELECT id FROM users WHERE email = ?")) {
             check.setString(1, ADMIN_EMAIL);
             try (ResultSet rs = check.executeQuery()) {
-                if (rs.next()) return;   // admin already exists
+                if (rs.next()) {
+                    int adminId = rs.getInt("id");
+                    try (PreparedStatement update = con.prepareStatement(
+                            "UPDATE users SET password = ?, role = 'ADMIN' WHERE id = ?")) {
+                        update.setString(1, passwordHash);
+                        update.setInt(2, adminId);
+                        update.executeUpdate();
+                        System.out.println("[DatabaseInitializer] Admin password verified for " + ADMIN_EMAIL);
+                    }
+                    return;
+                }
             }
         }
-
-        String adminPassword = System.getenv("ADMIN_PASSWORD");
-        if (adminPassword == null || adminPassword.isBlank()) adminPassword = "admin123";
 
         try (PreparedStatement ins = con.prepareStatement(
                 "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, 'ADMIN')")) {
             ins.setString(1, "Administrator");
             ins.setString(2, ADMIN_EMAIL);
-            ins.setString(3, PasswordUtil.hash(adminPassword));
+            ins.setString(3, passwordHash);
             ins.executeUpdate();
+            System.out.println("[DatabaseInitializer] Admin created: " + ADMIN_EMAIL);
         }
     }
 }
