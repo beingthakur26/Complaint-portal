@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
                     if ("admin@college.com".equals(email) && matchesAdmin) {
                         int adminId = selfHealAdmin(con, email, PasswordUtil.hash(password));
                         if (adminId > 0) {
-                            startSessionAndSend(req, res, con, adminId, "Administrator", "ADMIN");
+                            startSessionAndSend(req, res, con, adminId, "Administrator", email, "ADMIN");
                             return;
                         }
                     }
@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
                 String name = rs.getString("name");
                 String role = rs.getString("role");
 
-                startSessionAndSend(req, res, con, id, name, role);
+                startSessionAndSend(req, res, con, id, name, email, role);
             }
 
         } catch (SQLException e) {
@@ -74,16 +74,17 @@ public class LoginServlet extends HttpServlet {
     }
 
     private void startSessionAndSend(HttpServletRequest req, HttpServletResponse res, Connection con,
-                                     int id, String name, String role) throws IOException, SQLException {
+                                     int id, String name, String email, String role) throws IOException, SQLException {
         HttpSession old = req.getSession(false);
         if (old != null) old.invalidate();
         HttpSession session = req.getSession(true);
         session.setAttribute("userId", id);
         session.setAttribute("name", name);
+        session.setAttribute("email", email);
         session.setAttribute("role", role);
 
         ActivityLogger.log(con, id, "LOGGED IN");
-        JsonUtil.send(res, 200, Map.of("success", true, "role", role, "name", name));
+        JsonUtil.send(res, 200, Map.of("success", true, "role", role, "name", name, "email", email));
     }
 
     /** Emergency self-healing: ensures admin account exists and password hash matches. */

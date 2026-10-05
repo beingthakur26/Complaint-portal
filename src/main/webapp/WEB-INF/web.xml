@@ -5,6 +5,7 @@
          version="6.0">
   <display-name>Complaint Management Portal</display-name>
   <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
     <welcome-file>login.html</welcome-file>
   </welcome-file-list>
   <session-config>

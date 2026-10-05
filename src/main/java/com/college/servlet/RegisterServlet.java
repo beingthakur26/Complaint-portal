@@ -86,13 +86,15 @@ public class RegisterServlet extends HttpServlet {
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", newId);
             session.setAttribute("name", name);
+            session.setAttribute("email", email);
             session.setAttribute("role", "USER");
 
             JsonUtil.send(res, 200, Map.of(
                 "success", true,
                 "message", "Account created successfully.",
                 "role", "USER",
-                "name", name
+                "name", name,
+                "email", email
             ));
 
         } catch (SQLException e) {

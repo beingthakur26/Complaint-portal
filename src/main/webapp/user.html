@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ResolveHub - Student Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Navigation Header -->
@@ -17,19 +20,27 @@
         </svg>
       </div>
       <div class="brand-text">
-        <h1>Complaint Portal</h1>
-        <p>Student Service Desk</p>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h1>ResolveHub</h1>
+          <span class="header-role-badge">Student Desk</span>
+        </div>
+        <p>Campus Grievance &amp; Redressal Service</p>
       </div>
     </div>
 
-    <div class="header-user">
-      <div class="user-profile-badge">
+    <div class="header-nav-actions">
+      <!-- Clickable User Profile Badge -->
+      <div class="user-profile-badge" onclick="openProfileModal()" title="Click to view &amp; edit your profile" role="button" tabindex="0">
         <div class="user-avatar" id="userAvatar">U</div>
         <div class="user-meta">
-          <span class="user-name" id="userName">Loading...</span>
-          <span class="role-pill">Student</span>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <span class="user-name" id="userName">Loading...</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <span class="role-pill">Student Profile</span>
         </div>
       </div>
+
       <button class="btn-logout" onclick="logout()" title="Sign out of account">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         <span>Logout</span>
@@ -79,20 +90,20 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             File a New Grievance
           </h2>
-          <p>Provide specific details to help the administration resolve your issue quickly</p>
+          <p>Provide specific details to help the administration route and resolve your issue quickly</p>
         </div>
       </div>
 
       <!-- Quick Category Chips -->
-      <label>Select Category or Department</label>
+      <label class="form-section-label">Select Department / Category</label>
       <div class="category-chips">
-        <span class="category-chip" onclick="applyCategory('Hostel')">🏠 Hostel & Maintenance</span>
-        <span class="category-chip" onclick="applyCategory('Academic')">📚 Academic & Exams</span>
-        <span class="category-chip" onclick="applyCategory('Laboratory')">🔬 Lab Equipment</span>
-        <span class="category-chip" onclick="applyCategory('Wi-Fi / Network')">📶 Wi-Fi & IT</span>
-        <span class="category-chip" onclick="applyCategory('Library')">📖 Library Services</span>
-        <span class="category-chip" onclick="applyCategory('Mess / Cafeteria')">🍽️ Canteen / Mess</span>
-        <span class="category-chip" onclick="applyCategory('Cleanliness')">🧹 Hygiene & Sanitation</span>
+        <button type="button" class="category-chip" onclick="applyCategory('Hostel')">🏠 Hostel &amp; Maintenance</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Academic')">📚 Academic &amp; Exams</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Laboratory')">🔬 Lab Equipment</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Wi-Fi / Network')">📶 Wi-Fi &amp; IT</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Library')">📖 Library Services</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Mess / Cafeteria')">🍽️ Canteen / Mess</button>
+        <button type="button" class="category-chip" onclick="applyCategory('Cleanliness')">🧹 Hygiene &amp; Sanitation</button>
       </div>
 
       <form id="complaintForm" onsubmit="event.preventDefault(); submitComplaint();">
@@ -104,11 +115,11 @@
 
         <div class="form-group">
           <label for="description">Detailed Description</label>
-          <textarea id="description" placeholder="Explain the grievance clearly, including room number, specific equipment ID, or dates if applicable..." required></textarea>
+          <textarea id="description" rows="4" placeholder="Explain the grievance clearly, including room number, specific equipment ID, or dates if applicable..." required></textarea>
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:12px; align-items:center;">
-          <button type="submit" id="btnSubmitComplaint">
+          <button type="submit" id="btnSubmitComplaint" class="btn-primary-large">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             <span>Submit Grievance</span>
           </button>
@@ -126,7 +137,7 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             My Complaints History
           </h2>
-          <p>Real-time tracking of all grievances registered under your student profile</p>
+          <p>Real-time tracking of all grievances registered under your student profile. Click any row to view full details.</p>
         </div>
       </div>
 
@@ -136,7 +147,7 @@
           <span class="input-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </span>
-          <input type="text" id="userSearch" placeholder="Search by title or description..." oninput="filterUserComplaints()">
+          <input type="text" id="userSearch" placeholder="Search by title, description or ID..." oninput="filterUserComplaints()">
         </div>
 
         <div class="filter-pills">
@@ -149,14 +160,15 @@
 
       <!-- Complaints Table -->
       <div class="table-responsive">
-        <table>
+        <table class="interactive-table">
           <thead>
             <tr>
               <th style="width: 70px;">ID</th>
-              <th style="width: 220px;">Title</th>
+              <th style="width: 240px;">Title</th>
               <th>Description</th>
-              <th style="width: 130px;">Status</th>
-              <th style="width: 160px;">Date Filed</th>
+              <th style="width: 140px;">Status</th>
+              <th style="width: 170px;">Date Filed</th>
+              <th style="width: 90px; text-align:center;">Action</th>
             </tr>
           </thead>
           <tbody id="complaintRows">
@@ -189,7 +201,8 @@
       if (me.status !== 200) { window.location.href = "login.html"; return; }
       if (me.data.role === "ADMIN") { window.location.href = "admin.html"; return; }
       
-      const userName = me.data.name || "Student";
+      currentUser = me.data;
+      const userName = currentUser.name || "Student";
       document.getElementById("userName").textContent = userName;
       document.getElementById("userAvatar").textContent = getInitials(userName);
       
@@ -199,7 +212,6 @@
     function applyCategory(cat) {
       const titleInput = document.getElementById("title");
       const prefix = `[${cat}] `;
-      // If already has prefix, replace it
       titleInput.value = titleInput.value.replace(/^\[.*?\]\s*/, "");
       titleInput.value = prefix + titleInput.value;
       titleInput.focus();
@@ -271,6 +283,12 @@
 
       list.forEach(c => {
         const tr = document.createElement("tr");
+        tr.style.cursor = "pointer";
+        tr.onclick = (e) => {
+          // If clicked a button, ignore row click
+          if (e.target.closest("button")) return;
+          openGrievanceModal(c, false);
+        };
 
         // ID
         tr.appendChild(cell("#" + c.id, "id-cell"));
@@ -278,8 +296,9 @@
         // Title
         tr.appendChild(cell(c.title, "title-cell"));
 
-        // Description
-        tr.appendChild(cell(c.description, "desc-cell"));
+        // Description (truncated snippet)
+        const descCell = cell(c.description, "desc-cell");
+        tr.appendChild(descCell);
 
         // Status Badge
         const statusTd = document.createElement("td");
@@ -288,6 +307,17 @@
 
         // Date
         tr.appendChild(cell(formatDate(c.createdAt), "date-cell"));
+
+        // Action View Button
+        const actTd = document.createElement("td");
+        actTd.style.textAlign = "center";
+        const viewBtn = document.createElement("button");
+        viewBtn.type = "button";
+        viewBtn.className = "btn-table-action";
+        viewBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View`;
+        viewBtn.onclick = () => openGrievanceModal(c, false);
+        actTd.appendChild(viewBtn);
+        tr.appendChild(actTd);
 
         body.appendChild(tr);
       });

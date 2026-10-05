@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ResolveHub - Admin Console</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     .admin-nav-tabs {
       display: flex;
@@ -12,6 +15,7 @@
       margin-bottom: 24px;
       border-bottom: 1px solid var(--border-subtle);
       padding-bottom: 12px;
+      overflow-x: auto;
     }
     .admin-nav-btn {
       background: transparent;
@@ -23,6 +27,7 @@
       font-weight: 600;
       box-shadow: none;
       transition: all 0.2s ease;
+      white-space: nowrap;
     }
     .admin-nav-btn:hover {
       background: var(--bg-subtle);
@@ -35,10 +40,6 @@
       color: var(--primary);
       border: 1px solid #c7d2fe;
       box-shadow: none;
-    }
-    .status-select-wrapper {
-      position: relative;
-      display: inline-block;
     }
   </style>
 </head>
@@ -55,22 +56,27 @@
         </svg>
       </div>
       <div class="brand-text">
-        <h1>
-          Complaint Portal
-          <span style="font-size:0.7rem; background:#fee2e2; color:#991b1b; padding:2px 8px; border-radius:9999px; font-weight:700;">ADMIN</span>
-        </h1>
-        <p>Administration & Redressal Desk</p>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h1>ResolveHub</h1>
+          <span class="header-role-badge admin">ADMIN CONSOLE</span>
+        </div>
+        <p>Administration &amp; Grievance Redressal Desk</p>
       </div>
     </div>
 
-    <div class="header-user">
-      <div class="user-profile-badge">
+    <div class="header-nav-actions">
+      <!-- Clickable Admin Profile Badge -->
+      <div class="user-profile-badge" onclick="openProfileModal()" title="Click to view &amp; edit admin profile" role="button" tabindex="0">
         <div class="user-avatar" id="adminAvatar" style="background: linear-gradient(135deg, #334155 0%, #0f172a 100%);">A</div>
         <div class="user-meta">
-          <span class="user-name" id="adminName">Administrator</span>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <span class="user-name" id="adminName">Administrator</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
           <span class="role-pill" style="color:#b91c1c;">Super Admin</span>
         </div>
       </div>
+
       <button class="btn-logout" onclick="logout()" title="Sign out">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         <span>Logout</span>
@@ -86,7 +92,7 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div class="stat-content">
-          <span class="stat-label">Registered Students</span>
+          <span class="stat-label">Enrolled Students</span>
           <span class="stat-number" id="statUsers">0</span>
         </div>
       </div>
@@ -134,7 +140,7 @@
       </button>
       <button class="admin-nav-btn" id="tabBtnLogs" onclick="switchAdminTab('logs')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Audit & Activity Log
+        Audit &amp; Activity Log
       </button>
     </div>
 
@@ -142,8 +148,8 @@
     <div id="sectionComplaints" class="card">
       <div class="card-header">
         <div>
-          <h2>All Grievances & Complaints</h2>
-          <p>Review and update resolution status in real-time</p>
+          <h2>All Grievances &amp; Complaints</h2>
+          <p>Review, inspect details, and update resolution status in real-time</p>
         </div>
       </div>
 
@@ -152,7 +158,7 @@
           <span class="input-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </span>
-          <input type="text" id="adminComplaintSearch" placeholder="Search by student, title, or ID..." oninput="filterAdminComplaints()">
+          <input type="text" id="adminComplaintSearch" placeholder="Search by student, title, description, or ID..." oninput="filterAdminComplaints()">
         </div>
 
         <div class="filter-pills">
@@ -164,15 +170,16 @@
       </div>
 
       <div class="table-responsive">
-        <table>
+        <table class="interactive-table">
           <thead>
             <tr>
               <th style="width: 70px;">ID</th>
-              <th style="width: 160px;">Student Name</th>
-              <th style="width: 220px;">Title</th>
+              <th style="width: 170px;">Student Name</th>
+              <th style="width: 230px;">Title</th>
               <th>Description</th>
               <th style="width: 150px;">Filed Date</th>
-              <th style="width: 160px;">Action / Status</th>
+              <th style="width: 170px;">Status Action</th>
+              <th style="width: 80px; text-align:center;">Inspect</th>
             </tr>
           </thead>
           <tbody id="complaintRows">
@@ -210,14 +217,14 @@
       </div>
 
       <div class="table-responsive">
-        <table>
+        <table class="interactive-table">
           <thead>
             <tr>
-              <th style="width: 70px;">User ID</th>
+              <th style="width: 80px;">User ID</th>
               <th>Full Name</th>
               <th>Email Address</th>
-              <th style="width: 120px;">Role</th>
-              <th style="width: 140px;">Complaints Filed</th>
+              <th style="width: 130px;">Role</th>
+              <th style="width: 150px;">Complaints Filed</th>
             </tr>
           </thead>
           <tbody id="userRows">
@@ -231,19 +238,19 @@
     <div id="sectionLogs" class="card" style="display:none;">
       <div class="card-header">
         <div>
-          <h2>Audit & Activity Log</h2>
-          <p>Latest 100 chronological operations logged by the system</p>
+          <h2>Audit &amp; Activity Log</h2>
+          <p>Latest 100 chronological operations logged by the system for full accountability</p>
         </div>
       </div>
 
       <div class="table-responsive">
-        <table>
+        <table class="interactive-table">
           <thead>
             <tr>
               <th style="width: 80px;">Log ID</th>
-              <th style="width: 180px;">User / Actor</th>
+              <th style="width: 190px;">User / Actor</th>
               <th>Action Taken</th>
-              <th style="width: 180px;">Timestamp</th>
+              <th style="width: 190px;">Timestamp</th>
             </tr>
           </thead>
           <tbody id="logRows">
@@ -265,7 +272,8 @@
       if (me.status !== 200) { window.location.href = "login.html"; return; }
       if (me.data.role !== "ADMIN") { window.location.href = "user.html"; return; }
       
-      const adminName = me.data.name || "Administrator";
+      currentUser = me.data;
+      const adminName = currentUser.name || "Administrator";
       document.getElementById("adminName").textContent = adminName;
       document.getElementById("adminAvatar").textContent = getInitials(adminName);
 
@@ -372,7 +380,6 @@
           select.appendChild(opt);
         });
 
-        // Apply color based on initial status
         updateSelectStyle(select, c.status);
 
         select.onchange = () => {
@@ -383,6 +390,18 @@
         const td = document.createElement("td");
         td.appendChild(select);
         tr.appendChild(td);
+
+        // Inspect Button
+        const actTd = document.createElement("td");
+        actTd.style.textAlign = "center";
+        const viewBtn = document.createElement("button");
+        viewBtn.type = "button";
+        viewBtn.className = "btn-table-action";
+        viewBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+        viewBtn.title = "View ticket details";
+        viewBtn.onclick = () => openGrievanceModal(c, true, changeStatus);
+        actTd.appendChild(viewBtn);
+        tr.appendChild(actTd);
 
         cBody.appendChild(tr);
       });
@@ -472,7 +491,7 @@
       const result = await apiPost("api/admin", { complaintId, status });
       if (result.data && result.data.success) {
         showToast(`Complaint #${complaintId} changed to ${status}`, "ok");
-        loadDashboard(); // Refresh stats and activity logs
+        loadDashboard();
       } else {
         showToast((result.data && result.data.message) || "Failed to update status", "error");
         loadDashboard();

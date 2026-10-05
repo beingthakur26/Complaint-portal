@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ResolveHub - College Grievance Redressal Portal</title>
+  <meta name="description" content="Official grievance redressal platform for college students and staff. File complaints, track status in real-time, and ensure quick campus solutions.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="landing-body">
+
+  <!-- Landing Header -->
+  <header class="landing-header">
+    <div class="landing-nav-inner">
+      <a href="index.html" class="brand-wrapper">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>ResolveHub</h1>
+          <p>College Grievance Redressal</p>
+        </div>
+      </a>
+
+      <nav class="landing-nav-links">
+        <a href="#features">Features</a>
+        <a href="#departments">Departments</a>
+        <a href="#workflow">How It Works</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="landing-nav-actions">
+        <a href="login.html?tab=login" class="nav-btn nav-btn-outline">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" y1="12" x2="3" y2="12"></line>
+          </svg>
+          <span>Student Sign In</span>
+        </a>
+        <a href="login.html?role=admin" class="nav-btn nav-btn-admin">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span>Admin Portal</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-pill-badge">
+          <span class="pulse-indicator"></span>
+          <span>Official Campus Redressal Portal</span>
+        </div>
+
+        <h1 class="hero-title">
+          Fast, Transparent &amp; <span class="gradient-text">Accountable Grievance</span> Resolution
+        </h1>
+
+        <p class="hero-subtitle">
+          ResolveHub bridges the gap between students, faculty, and administrative departments. 
+          Report concerns effortlessly, track resolution milestones in real-time, and guarantee speedy action.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="login.html?tab=login" class="hero-cta-primary">
+            <span>File a Grievance</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <a href="login.html?tab=register" class="hero-cta-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            <span>Create Student Account</span>
+          </a>
+        </div>
+
+        <div class="hero-trust-row">
+          <div class="trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Confidential &amp; Verified</span>
+          </div>
+          <div class="trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>24 - 48h Response Time</span>
+          </div>
+          <div class="trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>100% Tracking Transparency</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Preview Card -->
+      <div class="hero-visual">
+        <div class="live-ticket-card">
+          <div class="ticket-header">
+            <div class="ticket-id-badge">
+              <span class="badge-dot"></span>
+              <span>Ticket #1048</span>
+            </div>
+            <span class="badge IN-PROGRESS">
+              <span class="badge-dot"></span>IN PROGRESS
+            </span>
+          </div>
+
+          <div class="ticket-body">
+            <h3 class="ticket-title">[Wi-Fi / Network] Access point outage in Library Reading Room</h3>
+            <p class="ticket-desc">Students are experiencing connection drops on the 2nd floor silent study area since this morning. Please inspect router AP-04.</p>
+            <div class="ticket-meta">
+              <span><strong>Student:</strong> Ananya Sen</span>
+              <span><strong>Department:</strong> Campus IT Services</span>
+              <span><strong>Filed:</strong> Today, 10:15 AM</span>
+            </div>
+          </div>
+
+          <div class="ticket-timeline">
+            <div class="timeline-step done">
+              <div class="step-circle">✓</div>
+              <div class="step-text">Submitted</div>
+            </div>
+            <div class="timeline-line done"></div>
+            <div class="timeline-step active">
+              <div class="step-circle">⚡</div>
+              <div class="step-text">In Review</div>
+            </div>
+            <div class="timeline-line"></div>
+            <div class="timeline-step">
+              <div class="step-circle">○</div>
+              <div class="step-text">Resolved</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Banner -->
+  <section class="stats-banner-section">
+    <div class="landing-container">
+      <div class="stats-banner-grid">
+        <div class="stat-banner-item">
+          <div class="stat-big-number">99.4%</div>
+          <div class="stat-banner-label">Resolution Rate</div>
+          <div class="stat-banner-sub">Issues solved within college SLA</div>
+        </div>
+        <div class="stat-banner-item">
+          <div class="stat-big-number">&lt; 24h</div>
+          <div class="stat-banner-label">Average Response</div>
+          <div class="stat-banner-sub">Swift acknowledgment by administration</div>
+        </div>
+        <div class="stat-banner-item">
+          <div class="stat-big-number">7+</div>
+          <div class="stat-banner-label">Active Departments</div>
+          <div class="stat-banner-sub">Hostel, Academics, IT, Sanitation &amp; more</div>
+        </div>
+        <div class="stat-banner-item">
+          <div class="stat-big-number">100%</div>
+          <div class="stat-banner-label">Encrypted &amp; Logged</div>
+          <div class="stat-banner-sub">Full audit trails for accountability</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Departments Covered -->
+  <section id="departments" class="section-padding">
+    <div class="landing-container">
+      <div class="section-header-center">
+        <span class="section-badge">Grievance Coverage</span>
+        <h2 class="section-title">Support Across All Campus Domains</h2>
+        <p class="section-subtitle">Select any department to route your grievance directly to responsible college officials.</p>
+      </div>
+
+      <div class="category-grid">
+        <div class="category-card">
+          <div class="cat-icon-box cat-hostel">🏠</div>
+          <h3>Hostel &amp; Maintenance</h3>
+          <p>Room repairs, electricity problems, plumbing, clean water supply, and furniture issues in campus residential hostels.</p>
+        </div>
+
+        <div class="category-card">
+          <div class="cat-icon-box cat-academic">📚</div>
+          <h3>Academic &amp; Exams</h3>
+          <p>Syllabus coverage, exam scheduling, grade discrepancies, assignment submissions, and faculty advisory feedback.</p>
+        </div>
+
+        <div class="category-card">
+          <div class="cat-icon-box cat-wifi">📶</div>
+          <h3>Wi-Fi &amp; IT Services</h3>
+          <p>Campus Wi-Fi connectivity, computer laboratory issues, portal logins, and technical support across departments.</p>
+        </div>
+
+        <div class="category-card">
+          <div class="cat-icon-box cat-lab">🔬</div>
+          <h3>Laboratory &amp; Equipment</h3>
+          <p>Non-functional instrumentation, chemical supply shortages, safety gear availability, and machine calibration.</p>
+        </div>
+
+        <div class="category-card">
+          <div class="cat-icon-box cat-library">📖</div>
+          <h3>Library Services</h3>
+          <p>Book lending limits, journal database access, quiet study zone maintenance, and digital repository queries.</p>
+        </div>
+
+        <div class="category-card">
+          <div class="cat-icon-box cat-canteen">🍽️</div>
+          <h3>Canteen &amp; Mess Hygiene</h3>
+          <p>Food quality monitoring, dining hall cleanliness, drinking water dispensers, and meal schedule feedback.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works / Workflow -->
+  <section id="workflow" class="section-padding bg-alt">
+    <div class="landing-container">
+      <div class="section-header-center">
+        <span class="section-badge">Streamlined Process</span>
+        <h2 class="section-title">How ResolveHub Operates</h2>
+        <p class="section-subtitle">From lodging your grievance to verified administrative resolution in three transparent steps.</p>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-card">
+          <div class="workflow-step-num">01</div>
+          <div class="workflow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </div>
+          <h3>File Your Grievance</h3>
+          <p>Sign in to your student account, select the category, provide room/location details, and submit your grievance in under 60 seconds.</p>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-step-num">02</div>
+          <div class="workflow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </div>
+          <h3>Administrative Action</h3>
+          <p>The ticket is immediately reviewed by college administration. Status dynamically updates to <strong>In Progress</strong> with assigned task forces.</p>
+        </div>
+
+        <div class="workflow-card">
+          <div class="workflow-step-num">03</div>
+          <div class="workflow-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <h3>Verified Resolution</h3>
+          <p>Once on-ground action is complete, the administrator marks the grievance <strong>Resolved</strong> and logs the action in the permanent audit trail.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features & Security -->
+  <section id="features" class="section-padding">
+    <div class="landing-container">
+      <div class="section-header-center">
+        <span class="section-badge">Platform Architecture</span>
+        <h2 class="section-title">Engineered for Reliability &amp; Trust</h2>
+        <p class="section-subtitle">Built with enterprise security standards and modern UI principles for seamless usage.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <h4>Cryptographic Security</h4>
+          <p>Passwords are never stored in plain text; SHA-256 cryptographic hashing safeguards student credentials.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h4>Dual Role-Based Portals</h4>
+          <p>Separate, secure dashboards for Students and College Staff ensure privacy and administrative efficiency.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h4>Live Activity Audit Logs</h4>
+          <p>Every login, ticket submission, and status escalation is recorded with timestamps for strict governance.</p>
+        </div>
+
+        <div class="feature-box">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <h4>Instant Filtering &amp; Search</h4>
+          <p>Easily filter grievances by status (Pending, In Progress, Resolved) and search by keywords or ticket ID.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section id="faq" class="section-padding bg-alt">
+    <div class="landing-container max-w-narrow">
+      <div class="section-header-center">
+        <span class="section-badge">Have Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Common queries regarding the grievance submission and resolution lifecycle.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-question">
+            <span>Who can file grievances on ResolveHub?</span>
+            <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>All enrolled students and campus staff members can register using their valid college or personal email address to submit complaints.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>How will I know when my issue is being resolved?</span>
+            <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Your dashboard updates dynamically. When the administration begins investigation or maintenance, the status changes to <strong>IN PROGRESS</strong>, and finally to <strong>RESOLVED</strong> once finished.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Can I update my student profile information?</span>
+            <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes! Clicking on your profile avatar in the navigation bar opens the User Profile modal, where you can modify your display name, email address, or update your password.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>How do College Administrators log in?</span>
+            <svg class="faq-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </summary>
+          <div class="faq-answer">
+            <p>Staff and administrators use the official administrative email and assigned security credentials through the Sign In portal to access the Admin Console.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Strip -->
+  <section class="landing-cta-strip">
+    <div class="landing-container text-center">
+      <h2>Ready to Make Campus Life Better?</h2>
+      <p>Submit your grievance now and let our dedicated administration team handle the rest.</p>
+      <div class="cta-actions">
+        <a href="login.html?tab=login" class="hero-cta-primary">Sign In to File Complaint</a>
+        <a href="login.html?tab=register" class="hero-cta-secondary" style="color:#fff; border-color:rgba(255,255,255,0.3);">Register New Account</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <div class="landing-container footer-inner">
+      <div class="footer-brand">
+        <div class="brand-wrapper">
+          <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1 style="color:#fff;">ResolveHub</h1>
+            <p style="color:#94a3b8;">College Redressal Cell</p>
+          </div>
+        </div>
+        <p class="footer-copy">Empowering students and faculty with transparent, quick, and verified issue resolution.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Portals</h5>
+          <a href="login.html?tab=login">Student Sign In</a>
+          <a href="login.html?tab=register">Register Account</a>
+          <a href="login.html?role=admin">Admin Console</a>
+        </div>
+        <div class="footer-col">
+          <h5>Departments</h5>
+          <a href="#departments">Hostel Maintenance</a>
+          <a href="#departments">Academic Desk</a>
+          <a href="#departments">Wi-Fi &amp; IT Support</a>
+          <a href="#departments">Canteen Hygiene</a>
+        </div>
+        <div class="footer-col">
+          <h5>System</h5>
+          <a href="#workflow">Resolution Workflow</a>
+          <a href="#features">Security &amp; Privacy</a>
+          <a href="#faq">Portal FAQs</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="landing-container">
+        <p>&copy; 2026 ResolveHub College Grievance Redressal Portal. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

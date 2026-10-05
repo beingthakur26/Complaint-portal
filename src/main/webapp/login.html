@@ -5,10 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ResolveHub - Portal Login</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="auth-page-body">
   <div class="auth-wrapper">
     <div class="auth-container">
+      
+      <!-- Top Navigation back to Landing Page -->
+      <div class="auth-back-link">
+        <a href="index.html" class="back-home-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Back to Home</span>
+        </a>
+      </div>
+
       <div class="auth-card">
         
         <!-- Brand Header -->
@@ -19,61 +34,79 @@
               <polyline points="9 12 11 14 15 10"/>
             </svg>
           </div>
-          <h1>Complaint Portal</h1>
-          <p>Student & Staff Grievance Redressal System</p>
+          <h1>ResolveHub</h1>
+          <p>Student & Staff Grievance Redressal Portal</p>
         </div>
 
         <!-- Auth Tabs -->
-        <div class="auth-tabs">
-          <button id="tabLogin" class="auth-tab active" type="button" onclick="showTab('login')">Sign In</button>
-          <button id="tabRegister" class="auth-tab" type="button" onclick="showTab('register')">Create Account</button>
+        <div class="auth-tabs" role="tablist">
+          <button id="tabLogin" class="auth-tab active" type="button" onclick="showTab('login')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            Sign In
+          </button>
+          <button id="tabRegister" class="auth-tab" type="button" onclick="showTab('register')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+            Create Account
+          </button>
         </div>
 
         <!-- LOGIN FORM -->
-        <form id="loginForm" onsubmit="event.preventDefault(); doLogin();">
+        <form id="loginForm" onsubmit="event.preventDefault(); doLogin();" novalidate>
           <div class="form-group">
             <label for="loginEmail">Email Address</label>
             <div class="input-wrapper">
               <span class="input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
               </span>
-              <input type="email" id="loginEmail" placeholder="e.g. admin@college.com" required autocomplete="username">
+              <input type="email" id="loginEmail" placeholder="Enter your email (e.g. name@college.com)" required autocomplete="username">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="loginPassword">Password</label>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label for="loginPassword" style="margin-bottom:0;">Password</label>
+            </div>
             <div class="input-wrapper">
               <span class="input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               </span>
               <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" class="btn-password-toggle" onclick="togglePasswordVisibility('loginPassword', this)" title="Toggle password visibility">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
           </div>
 
-          <button type="submit" id="btnLogin" style="width: 100%; margin-top: 8px;">
+          <button type="submit" id="btnLogin" class="btn-primary-large" style="width: 100%; margin-top: 12px;">
             <span>Sign In to Portal</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
           
           <div id="loginMsg" class="msg"></div>
 
-          <!-- Quick Fill for Admin Testing -->
-          <div class="quick-demo-box">
-            <span>Admin Demo: <strong>admin@college.com</strong></span>
-            <button type="button" class="quick-demo-btn" onclick="fillAdminDemo()">Auto-Fill</button>
+          <div class="auth-helper-note">
+            <p>Students and Administrators sign in using their respective college credentials.</p>
           </div>
         </form>
 
         <!-- REGISTER FORM -->
-        <form id="registerForm" style="display:none;" onsubmit="event.preventDefault(); doRegister();">
+        <form id="registerForm" style="display:none;" onsubmit="event.preventDefault(); doRegister();" novalidate>
           <div class="form-group">
             <label for="regName">Full Name</label>
             <div class="input-wrapper">
               <span class="input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               </span>
-              <input type="text" id="regName" placeholder="e.g. Priya Sharma" required>
+              <input type="text" id="regName" placeholder="e.g. Priya Sharma" required autocomplete="name">
             </div>
           </div>
 
@@ -83,7 +116,7 @@
               <span class="input-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
               </span>
-              <input type="email" id="regEmail" placeholder="priya@college.edu" required>
+              <input type="email" id="regEmail" placeholder="e.g. student@college.edu" required autocomplete="email">
             </div>
           </div>
 
@@ -94,10 +127,14 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
               </span>
               <input type="password" id="regPassword" placeholder="Minimum 6 characters" minlength="6" required autocomplete="new-password">
+              <button type="button" class="btn-password-toggle" onclick="togglePasswordVisibility('regPassword', this)" title="Toggle password visibility">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
             </div>
+            <div class="char-counter" style="text-align:left; margin-top:4px;">Must contain at least 6 characters</div>
           </div>
 
-          <button type="submit" id="btnRegister" style="width: 100%; margin-top: 8px;">
+          <button type="submit" id="btnRegister" class="btn-primary-large" style="width: 100%; margin-top: 12px;">
             <span>Create Student Account</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
           </button>
@@ -121,19 +158,43 @@
       document.getElementById("registerMsg").style.display = "none";
     }
 
-    function fillAdminDemo() {
-      document.getElementById("loginEmail").value = "admin@college.com";
-      document.getElementById("loginPassword").value = "admin123";
-      showToast("Admin credentials filled. Click Sign In!", "ok", 2500);
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></line><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+      } else {
+        input.type = "password";
+        btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+      }
     }
 
+    // Check query params for tab or admin hints
+    (function checkParams() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("tab") === "register") {
+        showTab("register");
+      }
+      if (params.get("role") === "admin") {
+        document.getElementById("loginEmail").placeholder = "admin@college.com";
+        document.getElementById("loginEmail").focus();
+      }
+    })();
+
     async function doLogin() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      if (!email || !password) {
+        showToast("Please enter both email and password.", "error");
+        showMessage("loginMsg", "Email and password are required.", "error");
+        return;
+      }
+
       const btn = document.getElementById("btnLogin");
       btn.disabled = true;
       btn.querySelector("span").textContent = "Authenticating...";
-
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
 
       const result = await apiPost("api/login", { email, password });
 
@@ -153,13 +214,24 @@
     }
 
     async function doRegister() {
-      const btn = document.getElementById("btnRegister");
-      btn.disabled = true;
-      btn.querySelector("span").textContent = "Creating Account...";
-
       const name = document.getElementById("regName").value.trim();
       const email = document.getElementById("regEmail").value.trim();
       const password = document.getElementById("regPassword").value;
+
+      if (!name || !email || !password) {
+        showToast("Please fill in all fields.", "error");
+        showMessage("registerMsg", "All fields are required.", "error");
+        return;
+      }
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters.", "error");
+        showMessage("registerMsg", "Password must be at least 6 characters.", "error");
+        return;
+      }
+
+      const btn = document.getElementById("btnRegister");
+      btn.disabled = true;
+      btn.querySelector("span").textContent = "Creating Account...";
 
       const result = await apiPost("api/register", { name, email, password });
 
@@ -167,7 +239,7 @@
       btn.querySelector("span").textContent = "Create Student Account";
 
       if (result.data && result.data.success) {
-        showToast("Account created! Logging you in...", "ok", 1500);
+        showToast("Account created successfully! Logging you in...", "ok", 1500);
         setTimeout(() => {
           window.location.href = "user.html";
         }, 350);
